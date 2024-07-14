@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Roblox Mobile Scripts</title>
+    <title>My Roblox Scripts</title>
     <style>
         body { font-family: Arial, sans-serif; padding: 20px; }
         .script { margin-bottom: 20px; }
@@ -17,8 +17,8 @@
 
     <script>
         const scripts = [
-            { title: "Infinite Yield", content: "print('Hello World!')" },
-            { title: "Keyboard", content: "print('Another Script')" },
+            { title: "Script 1", content: "print('Hello World!')" },
+            { title: "Script 2", content: "print('Another Script')" },
             // Add more scripts here
         ];
 
@@ -32,10 +32,6 @@
             titleDiv.classList.add('title');
             titleDiv.textContent = script.title;
             scriptDiv.appendChild(titleDiv);
-            
-            const contentPre = document.createElement('pre');
-            contentPre.textContent = script.content;
-            scriptDiv.appendChild(contentPre);
             
             const copyButton = document.createElement('button');
             copyButton.classList.add('copy-btn');
