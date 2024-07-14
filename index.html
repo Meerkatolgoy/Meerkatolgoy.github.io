@@ -10,6 +10,34 @@
             padding: 20px; 
             text-align: center; 
         }
+        .tabs { 
+            display: flex; 
+            justify-content: center; 
+            margin-bottom: 20px; 
+        }
+        .tab { 
+            margin: 0 10px; 
+            padding: 10px 20px; 
+            cursor: pointer; 
+            border: 1px solid #007bff; 
+            border-radius: 5px 5px 0 0; 
+            background-color: #007bff; 
+            color: white; 
+            font-weight: bold;
+        }
+        .tab.active { 
+            background-color: #0056b3; 
+        }
+        .tab-content { 
+            display: none; 
+            border: 1px solid #007bff; 
+            border-top: none; 
+            padding: 20px; 
+            border-radius: 0 5px 5px 5px; 
+        }
+        .tab-content.active { 
+            display: block; 
+        }
         .script { 
             margin-bottom: 20px; 
         }
@@ -40,15 +68,24 @@
 </head>
 <body>
     <h1>Roblox Mobile Scripts</h1>
-    <div id="scripts"></div>
+    <div class="tabs">
+        <div class="tab active" id="tab-scripts">Scripts</div>
+        <div class="tab" id="tab-key">Key</div>
+    </div>
+    <div class="tab-content active" id="content-scripts">
+        <div id="scripts"></div>
+    </div>
+    <div class="tab-content" id="content-key">
+        <input type="text" id="key-input" placeholder="Enter your key here" style="width: 80%; padding: 10px; font-size: 16px;">
+        <button class="copy-btn" id="copy-key-btn">Copy Key to Clipboard</button>
+    </div>
 
     <script>
         const scripts = [
             { title: "Infinite Yield", content: "loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()" },
             { title: "Keyboard", content: "loadstring(game:HttpGet('https://raw.githubusercontent.com/advxzivhsjjdhxhsidifvsh/mobkeyboard/main/main.txt', true))()" },
-            // Additional scripts
             { title: "Murders vs Sheriffs", content: "loadstring(game:HttpGet('https://pastebin.com/raw/vjTWQ8wW'))();" },
-         { title: "ESP and More", content: "loadstring(game:HttpGet('https://raw.githubusercontent.com/Vcsk/RobloxScripts/main/HitboxExpander.lua'))()" },
+             { title: "ESP and More", content: "loadstring(game:HttpGet('https://raw.githubusercontent.com/Vcsk/RobloxScripts/main/HitboxExpander.lua'))()" },
             { title: "Spider-Man (Needs Keyboard)", content: "loadstring(game:HttpGet(('https://pastebin.com/raw/2X0hKUgq'),true))()" },
             { title: "RTX", content: "loadstring(game:HttpGet(('https://pastefy.app/xXkUxA0P/raw'),true))()" },
             { title: "Nameless Admin", content: "loadstring(game:HttpGet('https://raw.githubusercontent.com/FilteringEnabled/NamelessAdmin/main/Source'))();" },
@@ -83,7 +120,10 @@
         ];
 
         const scriptsContainer = document.getElementById('scripts');
+        const keyInput = document.getElementById('key-input');
+        const copyKeyBtn = document.getElementById('copy-key-btn');
 
+        // Load scripts
         scripts.forEach(script => {
             const scriptDiv = document.createElement('div');
             scriptDiv.classList.add('script');
@@ -109,6 +149,40 @@
             scriptDiv.appendChild(copyButton);
             
             scriptsContainer.appendChild(scriptDiv);
+        });
+
+        // Load key from localStorage
+        const savedKey = localStorage.getItem('key');
+        if (savedKey) {
+            keyInput.value = savedKey;
+        }
+
+        // Save key to localStorage and copy to clipboard
+        copyKeyBtn.onclick = () => {
+            const key = keyInput.value;
+            localStorage.setItem('key', key);
+            navigator.clipboard.writeText(key).then(() => {
+                copyKeyBtn.disabled = true;
+                copyKeyBtn.textContent = 'Copied to Clipboard!';
+                setTimeout(() => {
+                    copyKeyBtn.disabled = false;
+                    copyKeyBtn.textContent = 'Copy Key to Clipboard';
+                }, 2000);
+            });
+        };
+
+        // Tab functionality
+        const tabs = document.querySelectorAll('.tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+
+                tabContents.forEach(content => content.classList.remove('active'));
+                document.getElementById(`content-${tab.id.split('-')[1]}`).classList.add('active');
+            });
         });
     </script>
 </body>
