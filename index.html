@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roblox Mobile Scripts</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .script { margin-bottom: 20px; }
+        .title { font-weight: bold; }
+        .copy-btn { margin-left: 10px; }
+    </style>
+</head>
+<body>
+    <h1>My Roblox Scripts</h1>
+    <div id="scripts"></div>
+
+    <script>
+        const scripts = [
+            { title: "Infinite Yield", content: "print('Hello World!')" },
+            { title: "Keyboard", content: "print('Another Script')" },
+            // Add more scripts here
+        ];
+
+        const scriptsContainer = document.getElementById('scripts');
+
+        scripts.forEach(script => {
+            const scriptDiv = document.createElement('div');
+            scriptDiv.classList.add('script');
+            
+            const titleDiv = document.createElement('div');
+            titleDiv.classList.add('title');
+            titleDiv.textContent = script.title;
+            scriptDiv.appendChild(titleDiv);
+            
+            const contentPre = document.createElement('pre');
+            contentPre.textContent = script.content;
+            scriptDiv.appendChild(contentPre);
+            
+            const copyButton = document.createElement('button');
+            copyButton.classList.add('copy-btn');
+            copyButton.textContent = 'Copy to Clipboard';
+            copyButton.onclick = () => {
+                navigator.clipboard.writeText(script.content).then(() => {
+                    alert('Script copied to clipboard!');
+                });
+            };
+            scriptDiv.appendChild(copyButton);
+            
+            scriptsContainer.appendChild(scriptDiv);
+        });
+    </script>
+</body>
+</html>
