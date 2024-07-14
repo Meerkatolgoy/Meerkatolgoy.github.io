@@ -148,7 +148,7 @@
             copyButton.onclick = () => {
                 navigator.clipboard.writeText(script.content).then(() => {
                     copyButton.disabled = true;
-                    copyButton.textContent = 'Copied';
+                    copyButton.textContent = 'Copied!';
                     setTimeout(() => {
                         copyButton.disabled = false;
                         copyButton.textContent = 'Copy';
@@ -171,7 +171,7 @@
             const key = keyInput.value;
             navigator.clipboard.writeText(key).then(() => {
                 copyKeyBtn.disabled = true;
-                copyKeyBtn.textContent = 'Copied';
+                copyKeyBtn.textContent = 'Copied!';
                 setTimeout(() => {
                     copyKeyBtn.disabled = false;
                     copyKeyBtn.textContent = 'Copy';
@@ -184,7 +184,7 @@
             const key = keyInput.value;
             localStorage.setItem('key', key);
             saveKeyBtn.disabled = true;
-            saveKeyBtn.textContent = 'Saved';
+            saveKeyBtn.textContent = 'Saved!';
             setTimeout(() => {
                 saveKeyBtn.disabled = false;
                 saveKeyBtn.textContent = 'Save';
