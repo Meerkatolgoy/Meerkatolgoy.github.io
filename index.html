@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Roblox Scripts</title>
+    <title>Roblox Mobile Scripts</title>
     <style>
         body { 
             font-family: Arial, sans-serif; 
@@ -12,10 +12,13 @@
         }
         .script { 
             margin-bottom: 20px; 
+            display: inline-block; /* Ensure inline-block display for centering */
+            width: 100%; /* Ensure full width for proper alignment */
         }
         .title { 
             font-weight: bold; 
             display: block; /* Ensure block display for centering */
+            margin-bottom: 10px; /* Add some spacing below the title */
         }
         .copy-btn { 
             margin-left: 10px; 
@@ -30,7 +33,7 @@
     <script>
         const scripts = [
             { title: "Infinite Yield", content: "loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()" },
-            { title: "Keyboard", content: "loadstring(game:HttpGet("https://raw.githubusercontent.com/advxzivhsjjdhxhsidifvsh/mobkeyboard/main/main.txt", true))()" },
+            { title: "Keyboard", content: "loadstring(game:HttpGet('https://raw.githubusercontent.com/advxzivhsjjdhxhsidifvsh/mobkeyboard/main/main.txt', true))()" },
             // Add more scripts here
         ];
 
