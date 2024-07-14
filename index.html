@@ -20,6 +20,21 @@
         }
         .copy-btn { 
             display: inline-block; 
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .copy-btn:hover {
+            background-color: #0056b3;
+        }
+        .copy-btn:disabled {
+            background-color: #6c757d;
+            cursor: not-allowed;
         }
     </style>
 </head>
@@ -29,11 +44,11 @@
 
     <script>
         const scripts = [
-            { title: "Infinite Yield Reborn", content: "loadstring(game:HttpGet('https://github.com/fuckusfm/infiniteyield-reborn/raw/master/source'))()" },
+            { title: "Infinite Yield", content: "loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()" },
             { title: "Keyboard", content: "loadstring(game:HttpGet('https://raw.githubusercontent.com/advxzivhsjjdhxhsidifvsh/mobkeyboard/main/main.txt', true))()" },
             // Additional scripts
             { title: "Murders vs Sheriffs", content: "loadstring(game:HttpGet('https://pastebin.com/raw/vjTWQ8wW'))();" },
-            { title: "ESP and More", content: "loadstring(game:HttpGet('https://raw.githubusercontent.com/Vcsk/RobloxScripts/main/HitboxExpander.lua'))()" },
+         { title: "ESP and More", content: "loadstring(game:HttpGet('https://raw.githubusercontent.com/Vcsk/RobloxScripts/main/HitboxExpander.lua'))()" },
             { title: "Spider-Man (Needs Keyboard)", content: "loadstring(game:HttpGet(('https://pastebin.com/raw/2X0hKUgq'),true))()" },
             { title: "RTX", content: "loadstring(game:HttpGet(('https://pastefy.app/xXkUxA0P/raw'),true))()" },
             { title: "Nameless Admin", content: "loadstring(game:HttpGet('https://raw.githubusercontent.com/FilteringEnabled/NamelessAdmin/main/Source'))();" },
@@ -83,7 +98,12 @@
             copyButton.textContent = 'Copy to Clipboard';
             copyButton.onclick = () => {
                 navigator.clipboard.writeText(script.content).then(() => {
-                    alert('Script copied to clipboard!');
+                    copyButton.disabled = true;
+                    copyButton.textContent = 'Copied to clipboard!';
+                    setTimeout(() => {
+                        copyButton.disabled = false;
+                        copyButton.textContent = 'Copy to Clipboard';
+                    }, 2000);
                 });
             };
             scriptDiv.appendChild(copyButton);
