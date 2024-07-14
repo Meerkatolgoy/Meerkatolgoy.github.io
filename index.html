@@ -15,9 +15,11 @@
         }
         .title { 
             font-weight: bold; 
+            display: block; /* Ensure block display for centering */
         }
         .copy-btn { 
             margin-left: 10px; 
+            display: inline-block; /* Ensure inline-block display for centering */
         }
     </style>
 </head>
@@ -27,10 +29,8 @@
 
     <script>
         const scripts = [
-            { title: "Infinite Yield", content: "--Infinite Yield
-loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()" },
-            { title: "Keybiard", content: "--Keyboard!!!!!!!!!!!!!!!
-loadstring(game:HttpGet("https://raw.githubusercontent.com/advxzivhsjjdhxhsidifvsh/mobkeyboard/main/main.txt", true))()" },
+            { title: "Infinite Yield", content: "print('Hello World!')" },
+            { title: "Keyboard", content: "print('Another Script')" },
             // Add more scripts here
         ];
 
