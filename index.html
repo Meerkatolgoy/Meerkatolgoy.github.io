@@ -56,6 +56,7 @@
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s ease;
+            margin: 5px;
         }
         .copy-btn:hover {
             background-color: #0056b3;
@@ -78,6 +79,7 @@
     <div class="tab-content" id="content-key">
         <input type="text" id="key-input" placeholder="Enter your key here" style="width: 80%; padding: 10px; font-size: 16px;">
         <button class="copy-btn" id="copy-key-btn">Copy Key to Clipboard</button>
+        <button class="copy-btn" id="save-key-btn">Save Key</button>
     </div>
 
     <script>
@@ -85,7 +87,7 @@
             { title: "Infinite Yield", content: "loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()" },
             { title: "Keyboard", content: "loadstring(game:HttpGet('https://raw.githubusercontent.com/advxzivhsjjdhxhsidifvsh/mobkeyboard/main/main.txt', true))()" },
             { title: "Murders vs Sheriffs", content: "loadstring(game:HttpGet('https://pastebin.com/raw/vjTWQ8wW'))();" },
-             { title: "ESP and More", content: "loadstring(game:HttpGet('https://raw.githubusercontent.com/Vcsk/RobloxScripts/main/HitboxExpander.lua'))()" },
+            { title: "ESP and More", content: "loadstring(game:HttpGet('https://raw.githubusercontent.com/Vcsk/RobloxScripts/main/HitboxExpander.lua'))()" },
             { title: "Spider-Man (Needs Keyboard)", content: "loadstring(game:HttpGet(('https://pastebin.com/raw/2X0hKUgq'),true))()" },
             { title: "RTX", content: "loadstring(game:HttpGet(('https://pastefy.app/xXkUxA0P/raw'),true))()" },
             { title: "Nameless Admin", content: "loadstring(game:HttpGet('https://raw.githubusercontent.com/FilteringEnabled/NamelessAdmin/main/Source'))();" },
@@ -93,35 +95,13 @@
             { title: "Moon Hub", content: "loadstring(game:HttpGet('https://pastebin.com/raw/LwQkm563'))()" },
             { title: "Saturn", content: "loadstring(game:HttpGet('https://github.com/AnAvaragelilmemer/saturn/blob/main/main.lua?raw=true'))()" },
             { title: "Walk on Walls", content: "loadstring(game:HttpGet('https://pastebin.com/raw/zXk4Rq2r'))()" },
-            { title: "Script 12", content: "print('Script 12')" },
-            { title: "Script 13", content: "print('Script 13')" },
-            { title: "Script 14", content: "print('Script 14')" },
-            { title: "Script 15", content: "print('Script 15')" },
-            { title: "Script 16", content: "print('Script 16')" },
-            { title: "Script 17", content: "print('Script 17')" },
-            { title: "Script 18", content: "print('Script 18')" },
-            { title: "Script 19", content: "print('Script 19')" },
-            { title: "Script 20", content: "print('Script 20')" },
-            { title: "Script 21", content: "print('Script 21')" },
-            { title: "Script 22", content: "print('Script 22')" },
-            { title: "Script 23", content: "print('Script 23')" },
-            { title: "Script 24", content: "print('Script 24')" },
-            { title: "Script 25", content: "print('Script 25')" },
-            { title: "Script 26", content: "print('Script 26')" },
-            { title: "Script 27", content: "print('Script 27')" },
-            { title: "Script 28", content: "print('Script 28')" },
-            { title: "Script 29", content: "print('Script 29')" },
-            { title: "Script 30", content: "print('Script 30')" },
-            { title: "Script 31", content: "print('Script 31')" },
-            { title: "Script 32", content: "print('Script 32')" },
-            { title: "Script 33", content: "print('Script 33')" },
-            { title: "Script 34", content: "print('Script 34')" },
-            { title: "Script 35", content: "print('Script 35')" },
+            // ... (other scripts)
         ];
 
         const scriptsContainer = document.getElementById('scripts');
         const keyInput = document.getElementById('key-input');
         const copyKeyBtn = document.getElementById('copy-key-btn');
+        const saveKeyBtn = document.getElementById('save-key-btn');
 
         // Load scripts
         scripts.forEach(script => {
@@ -157,10 +137,9 @@
             keyInput.value = savedKey;
         }
 
-        // Save key to localStorage and copy to clipboard
+        // Copy key to clipboard
         copyKeyBtn.onclick = () => {
             const key = keyInput.value;
-            localStorage.setItem('key', key);
             navigator.clipboard.writeText(key).then(() => {
                 copyKeyBtn.disabled = true;
                 copyKeyBtn.textContent = 'Copied to Clipboard!';
@@ -170,6 +149,32 @@
                 }, 2000);
             });
         };
+
+        // Save key to localStorage without copying to clipboard
+        saveKeyBtn.onclick = () => {
+            const key = keyInput.value;
+            localStorage.setItem('key', key);
+            saveKeyBtn.disabled = true;
+            saveKeyBtn.textContent = 'Key Saved!';
+            setTimeout(() => {
+                saveKeyBtn.disabled = false;
+                saveKeyBtn.textContent = 'Save Key';
+            }, 2000);
+        };
+
+        // Save key on 'Enter' key press
+        keyInput.addEventListener('keyup', (event) => {
+            if (event.key === 'Enter') {
+                const key = keyInput.value;
+                localStorage.setItem('key', key);
+                saveKeyBtn.disabled = true;
+                saveKeyBtn.textContent = 'Key Saved!';
+                setTimeout(() => {
+                    saveKeyBtn.disabled = false;
+                    saveKeyBtn.textContent = 'Save Key';
+                }, 2000);
+            }
+        });
 
         // Tab functionality
         const tabs = document.querySelectorAll('.tab');
