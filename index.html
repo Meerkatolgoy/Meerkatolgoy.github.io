@@ -6,9 +6,18 @@
     <title>Roblox Mobile Scripts</title>
     <style>
         body { 
-            font-family: Arial, sans-serif; 
-            padding: 20px; 
-            text-align: center; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px;
+            text-align: center;
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+        }
+        h1 {
+            color: #ffffff;
+            background-color: #2a2a2a;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
         .tabs { 
             display: flex; 
@@ -19,44 +28,52 @@
             margin: 0 10px; 
             padding: 10px 20px; 
             cursor: pointer; 
-            border: 1px solid #007bff; 
-            border-radius: 5px 5px 0 0; 
-            background-color: #007bff; 
-            color: white; 
+            border: 2px solid #4a4a4a; 
+            border-radius: 25px; 
+            background-color: #2a2a2a; 
+            color: #e0e0e0; 
             font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        .tab:hover {
+            background-color: #3a3a3a;
         }
         .tab.active { 
-            background-color: #0056b3; 
+            background-color: #4a4a4a; 
+            color: #ffffff;
         }
         .tab-content { 
             display: none; 
-            border: 1px solid #007bff; 
-            border-top: none; 
+            border: 2px solid #4a4a4a; 
             padding: 20px; 
-            border-radius: 0 5px 5px 5px; 
+            border-radius: 10px; 
+            background-color: #2a2a2a;
         }
         .tab-content.active { 
             display: block; 
         }
         .script { 
             margin-bottom: 20px; 
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #3a3a3a;
+            padding: 10px;
+            border-radius: 5px;
         }
         .title { 
             font-weight: bold; 
-            display: block; 
-            margin-bottom: 10px; 
+            color: #e0e0e0;
         }
         .copy-btn { 
-            display: inline-block; 
-            padding: 10px 20px;
-            font-size: 16px;
+            padding: 5px 15px;
+            font-size: 14px;
             background-color: #007bff;
-            color: white;
+            color: #ffffff;
             border: none;
-            border-radius: 5px;
+            border-radius: 15px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
-            margin: 5px;
+            transition: all 0.3s ease;
         }
         .copy-btn:hover {
             background-color: #0056b3;
@@ -64,6 +81,19 @@
         .copy-btn:disabled {
             background-color: #6c757d;
             cursor: not-allowed;
+        }
+        #key-input {
+            width: 80%; 
+            padding: 10px; 
+            font-size: 16px;
+            background-color: #3a3a3a;
+            border: 2px solid #4a4a4a;
+            border-radius: 5px;
+            color: #e0e0e0;
+            margin-bottom: 10px;
+        }
+        #key-input::placeholder {
+            color: #808080;
         }
     </style>
 </head>
@@ -77,9 +107,9 @@
         <div id="scripts"></div>
     </div>
     <div class="tab-content" id="content-key">
-        <input type="text" id="key-input" placeholder="Enter your key here" style="width: 80%; padding: 10px; font-size: 16px;">
-        <button class="copy-btn" id="copy-key-btn">Copy Key to Clipboard</button>
-        <button class="copy-btn" id="save-key-btn">Save Key</button>
+        <input type="text" id="key-input" placeholder="Enter key here">
+        <button class="copy-btn" id="copy-key-btn">Copy</button>
+        <button class="copy-btn" id="save-key-btn">Save</button>
     </div>
 
     <script>
@@ -95,7 +125,6 @@
             { title: "Moon Hub", content: "loadstring(game:HttpGet('https://pastebin.com/raw/LwQkm563'))()" },
             { title: "Saturn", content: "loadstring(game:HttpGet('https://github.com/AnAvaragelilmemer/saturn/blob/main/main.lua?raw=true'))()" },
             { title: "Walk on Walls", content: "loadstring(game:HttpGet('https://pastebin.com/raw/zXk4Rq2r'))()" },
-            // ... (other scripts)
         ];
 
         const scriptsContainer = document.getElementById('scripts');
@@ -115,14 +144,14 @@
             
             const copyButton = document.createElement('button');
             copyButton.classList.add('copy-btn');
-            copyButton.textContent = 'Copy to Clipboard';
+            copyButton.textContent = 'Copy';
             copyButton.onclick = () => {
                 navigator.clipboard.writeText(script.content).then(() => {
                     copyButton.disabled = true;
-                    copyButton.textContent = 'Copied to Clipboard!';
+                    copyButton.textContent = 'Copied';
                     setTimeout(() => {
                         copyButton.disabled = false;
-                        copyButton.textContent = 'Copy to Clipboard';
+                        copyButton.textContent = 'Copy';
                     }, 2000);
                 });
             };
@@ -142,23 +171,23 @@
             const key = keyInput.value;
             navigator.clipboard.writeText(key).then(() => {
                 copyKeyBtn.disabled = true;
-                copyKeyBtn.textContent = 'Copied to Clipboard!';
+                copyKeyBtn.textContent = 'Copied';
                 setTimeout(() => {
                     copyKeyBtn.disabled = false;
-                    copyKeyBtn.textContent = 'Copy Key to Clipboard';
+                    copyKeyBtn.textContent = 'Copy';
                 }, 2000);
             });
         };
 
-        // Save key to localStorage without copying to clipboard
+        // Save key to localStorage
         saveKeyBtn.onclick = () => {
             const key = keyInput.value;
             localStorage.setItem('key', key);
             saveKeyBtn.disabled = true;
-            saveKeyBtn.textContent = 'Key Saved!';
+            saveKeyBtn.textContent = 'Saved';
             setTimeout(() => {
                 saveKeyBtn.disabled = false;
-                saveKeyBtn.textContent = 'Save Key';
+                saveKeyBtn.textContent = 'Save';
             }, 2000);
         };
 
@@ -168,10 +197,10 @@
                 const key = keyInput.value;
                 localStorage.setItem('key', key);
                 saveKeyBtn.disabled = true;
-                saveKeyBtn.textContent = 'Key Saved!';
+                saveKeyBtn.textContent = 'Saved';
                 setTimeout(() => {
                     saveKeyBtn.disabled = false;
-                    saveKeyBtn.textContent = 'Save Key';
+                    saveKeyBtn.textContent = 'Save';
                 }, 2000);
             }
         });
