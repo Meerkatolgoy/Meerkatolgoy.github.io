@@ -99,7 +99,7 @@
             copyButton.onclick = () => {
                 navigator.clipboard.writeText(script.content).then(() => {
                     copyButton.disabled = true;
-                    copyButton.textContent = 'Copied to clipboard!';
+                    copyButton.textContent = 'Copied to Clipboard!';
                     setTimeout(() => {
                         copyButton.disabled = false;
                         copyButton.textContent = 'Copy to Clipboard';
