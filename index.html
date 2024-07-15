@@ -10,15 +10,15 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             padding: 20px;
             text-align: center;
-            background-color: #1a1a1a;
+            background-color: #000000;
             color: #e0e0e0;
         }
         h1 {
             color: #ffffff;
-            background-color: #2a2a2a;
+            background-color: #1a1a1a;
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 6px rgba(255, 255, 255, 0.1);
         }
         .tabs { 
             display: flex; 
@@ -29,26 +29,26 @@
             margin: 0 10px; 
             padding: 10px 20px; 
             cursor: pointer; 
-            border: 2px solid #4a4a4a; 
+            border: 2px solid #333333; 
             border-radius: 25px; 
-            background-color: #2a2a2a; 
+            background-color: #1a1a1a; 
             color: #e0e0e0; 
             font-weight: bold;
             transition: all 0.3s ease;
         }
         .tab:hover {
-            background-color: #3a3a3a;
+            background-color: #2a2a2a;
         }
         .tab.active { 
-            background-color: #4a4a4a; 
+            background-color: #333333; 
             color: #ffffff;
         }
         .tab-content { 
             display: none; 
-            border: 2px solid #4a4a4a; 
+            border: 2px solid #333333; 
             padding: 20px; 
             border-radius: 10px; 
-            background-color: #2a2a2a;
+            background-color: #1a1a1a;
         }
         .tab-content.active { 
             display: block; 
@@ -58,7 +58,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background-color: #3a3a3a;
+            background-color: #2a2a2a;
             padding: 10px;
             border-radius: 5px;
         }
@@ -69,7 +69,7 @@
         .copy-btn { 
             padding: 5px 15px;
             font-size: 14px;
-            background-color: #007bff;
+            background: linear-gradient(to right, #78023f, #480267);
             color: #ffffff;
             border: none;
             border-radius: 15px;
@@ -77,18 +77,18 @@
             transition: all 0.3s ease;
         }
         .copy-btn:hover {
-            background-color: #0056b3;
+            opacity: 0.8;
         }
         .copy-btn:disabled {
-            background-color: #6c757d;
+            background: #333333;
             cursor: not-allowed;
         }
         #key-input {
             width: 80%; 
             padding: 10px; 
             font-size: 16px;
-            background-color: #3a3a3a;
-            border: 2px solid #4a4a4a;
+            background-color: #2a2a2a;
+            border: 2px solid #333333;
             border-radius: 5px;
             color: #e0e0e0;
             margin-bottom: 10px;
@@ -112,7 +112,6 @@
         <button class="copy-btn" id="copy-key-btn">Copy</button>
         <button class="copy-btn" id="save-key-btn">Save</button>
     </div>
-
     <script>
         const scripts = [
             { title: "Infinite Yield", content: "loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()" },
@@ -209,12 +208,10 @@
         // Tab functionality
         const tabs = document.querySelectorAll('.tab');
         const tabContents = document.querySelectorAll('.tab-content');
-
         tabs.forEach(tab => {
             tab.addEventListener('click', () => {
                 tabs.forEach(t => t.classList.remove('active'));
                 tab.classList.add('active');
-
                 tabContents.forEach(content => content.classList.remove('active'));
                 document.getElementById(`content-${tab.id.split('-')[1]}`).classList.add('active');
             });
