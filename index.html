@@ -117,10 +117,7 @@
         <input type="text" id="key-input" placeholder="Enter key here">
         <button class="copy-btn" id="copy-key-btn">Copy</button>
         <button class="copy-btn" id="save-key-btn">Save</button>
-        <div id="timer-display">
-            <img src="Text.JPG" alt="Time" style="vertical-align: middle; margin-right: 10px;">
-            <span id="timer-text">Time remaining: 06:00:00</span>
-        </div>
+        <div id="timer-display">Time remaining: 06:00:00</div>
         <div id="key-status">Key Status: <span id="status-text" style="color: #d63b3e;">Inactive</span></div>
     </div>
     <script>
@@ -143,7 +140,7 @@
         const keyInput = document.getElementById('key-input');
         const copyKeyBtn = document.getElementById('copy-key-btn');
         const saveKeyBtn = document.getElementById('save-key-btn');
-        const timerText = document.getElementById('timer-text');
+        const timerDisplay = document.getElementById('timer-display');
         const statusText = document.getElementById('status-text');
 
         let timer;
@@ -243,7 +240,7 @@
 
             if (timeDiff <= 0) {
                 clearInterval(timer);
-                timerText.textContent = 'Time remaining: 00:00:00';
+                timerDisplay.textContent = 'Time remaining: 00:00:00';
                 statusText.textContent = 'Inactive';
                 statusText.style.color = '#d63b3e';
                 localStorage.removeItem('endTime');
@@ -252,7 +249,7 @@
                 const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
                 const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
 
-                timerText.textContent = `Time remaining: ${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+                timerDisplay.textContent = `Time remaining: ${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
                 statusText.textContent = 'Active';
                 statusText.style.color = '#71d69d';
             }
@@ -265,7 +262,7 @@
                 updateTimer();
                 timer = setInterval(updateTimer, 1000);
             } else {
-                timerText.textContent = 'Time remaining: 00:00:00';
+                timerDisplay.textContent = 'Time remaining: 00:00:00';
                 statusText.textContent = 'Inactive';
                 statusText.style.color = '#d63b3e';
             }
