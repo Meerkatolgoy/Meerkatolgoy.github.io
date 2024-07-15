@@ -97,6 +97,11 @@
         #key-input::placeholder {
             color: #808080;
         }
+        #timer-display, #key-status {
+            margin-top: 20px;
+            font-size: 16px;
+            color: #e0e0e0;
+        }
     </style>
 </head>
 <body>
@@ -112,6 +117,8 @@
         <input type="text" id="key-input" placeholder="Enter key here">
         <button class="copy-btn" id="copy-key-btn">Copy</button>
         <button class="copy-btn" id="save-key-btn">Save</button>
+        <div id="timer-display">Time remaining: 06:00:00</div>
+        <div id="key-status">Key Status: <span id="status-text" style="color: #d63b3e;">Inactive</span></div>
     </div>
     <script>
         const scripts = [
@@ -133,6 +140,11 @@
         const keyInput = document.getElementById('key-input');
         const copyKeyBtn = document.getElementById('copy-key-btn');
         const saveKeyBtn = document.getElementById('save-key-btn');
+        const timerDisplay = document.getElementById('timer-display');
+        const statusText = document.getElementById('status-text');
+
+        let timer;
+        let endTime;
 
         // Load scripts
         scripts.forEach(script => {
@@ -162,10 +174,15 @@
             scriptsContainer.appendChild(scriptDiv);
         });
 
-        // Load key from localStorage
+        // Load key and timer from localStorage
         const savedKey = localStorage.getItem('key');
+        const savedEndTime = localStorage.getItem('endTime');
         if (savedKey) {
             keyInput.value = savedKey;
+        }
+        if (savedEndTime) {
+            endTime = new Date(savedEndTime);
+            updateTimer();
         }
 
         // Copy key to clipboard
@@ -181,10 +198,11 @@
             });
         };
 
-        // Save key to localStorage
+        // Save key to localStorage and start timer
         saveKeyBtn.onclick = () => {
             const key = keyInput.value;
             localStorage.setItem('key', key);
+            startTimer();
             saveKeyBtn.disabled = true;
             saveKeyBtn.textContent = 'Saved!';
             setTimeout(() => {
@@ -198,6 +216,7 @@
             if (event.key === 'Enter') {
                 const key = keyInput.value;
                 localStorage.setItem('key', key);
+                startTimer();
                 saveKeyBtn.disabled = true;
                 saveKeyBtn.textContent = 'Saved';
                 setTimeout(() => {
@@ -206,6 +225,48 @@
                 }, 2000);
             }
         });
+
+        function startTimer() {
+            clearInterval(timer);
+            endTime = new Date(new Date().getTime() + 6 * 60 * 60 * 1000);
+            localStorage.setItem('endTime', endTime);
+            updateTimer();
+            timer = setInterval(updateTimer, 1000);
+        }
+
+        function updateTimer() {
+            const now = new Date();
+            const timeDiff = endTime - now;
+
+            if (timeDiff <= 0) {
+                clearInterval(timer);
+                timerDisplay.textContent = 'Time remaining: 00:00:00';
+                statusText.textContent = 'Inactive';
+                statusText.style.color = '#d63b3e';
+                localStorage.removeItem('endTime');
+            } else {
+                const hours = Math.floor(timeDiff / (1000 * 60 * 60));
+                const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+
+                timerDisplay.textContent = `Time remaining: ${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+                statusText.textContent = 'Active';
+                statusText.style.color = '#71d69d';
+            }
+        }
+
+        // Check timer status on page load
+        if (endTime) {
+            const now = new Date();
+            if (endTime > now) {
+                updateTimer();
+                timer = setInterval(updateTimer, 1000);
+            } else {
+                timerDisplay.textContent = 'Time remaining: 00:00:00';
+                statusText.textContent = 'Inactive';
+                statusText.style.color = '#d63b3e';
+            }
+        }
 
         // Tab functionality
         const tabs = document.querySelectorAll('.tab');
@@ -218,6 +279,6 @@
                 document.getElementById(`content-${tab.id.split('-')[1]}`).classList.add('active');
             });
         });
-   </script>
-   </body>
-   </html>
+    </script>
+</body>
+</html>
