@@ -1,284 +1,555 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
+
     <link rel="shortcut icon" type="image/png" href="favicon.PNG">
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Roblox Mobile Scripts</title>
+
     <style>
+
         body { 
+
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
             padding: 20px;
+
             text-align: center;
+
             background-color: #000000;
+
             color: #e0e0e0;
+
         }
+
         h1 {
+
             color: #ffffff;
+
             background-color: #1a1a1a;
+
             padding: 20px;
+
             border-radius: 10px;
+
             box-shadow: 0 4px 6px rgba(255, 255, 255, 0.1);
+
         }
+
         .tabs { 
+
             display: flex; 
+
             justify-content: center; 
+
             margin-bottom: 20px; 
+
         }
+
         .tab { 
+
             margin: 0 10px; 
+
             padding: 10px 20px; 
+
             cursor: pointer; 
+
             border: 2px solid #333333; 
+
             border-radius: 25px; 
+
             background-color: #1a1a1a; 
+
             color: #e0e0e0; 
+
             font-weight: bold;
+
             transition: all 0.3s ease;
+
         }
+
         .tab:hover {
+
             background-color: #2a2a2a;
+
         }
+
         .tab.active { 
+
             background-color: #333333; 
+
             color: #ffffff;
+
         }
+
         .tab-content { 
+
             display: none; 
+
             border: 2px solid; 
+
             border-image: linear-gradient(to bottom, #f3007b, #8b00c9) 1;
+
             padding: 20px; 
+
             border-radius: 10px; 
+
             background-color: #1a1a1a;
+
         }
+
         .tab-content.active { 
+
             display: block; 
+
         }
+
         .script { 
+
             margin-bottom: 20px; 
+
             display: flex;
+
             justify-content: space-between;
+
             align-items: center;
+
             background-color: #2a2a2a;
+
             padding: 10px;
+
             border-radius: 5px;
+
         }
+
         .title { 
+
             font-weight: bold; 
+
             color: #e0e0e0;
+
         }
+
         .copy-btn { 
+
             padding: 10px 20px;
+
             font-size: 14px;
+
             background: linear-gradient(to right, #78023f, #480267);
+
             color: #ffffff;
+
             border: none;
+
             border-radius: 10px;
+
             cursor: pointer;
+
             transition: all 0.3s ease;
+
         }
+
         .copy-btn:hover {
+
             opacity: 0.8;
+
         }
+
         .copy-btn:disabled {
+
             background: #333333;
+
             cursor: not-allowed;
+
         }
+
         #key-input {
+
             width: 80%; 
+
             padding: 10px; 
+
             font-size: 16px;
+
             background-color: #2a2a2a;
+
             border: 2px solid #333333;
+
             border-radius: 5px;
+
             color: #e0e0e0;
+
             margin-bottom: 10px;
+
         }
+
         #key-input::placeholder {
+
             color: #808080;
+
         }
-        #timer-display, #key-status {
+
+        #timer-container {
             margin-top: 20px;
             font-size: 16px;
             color: #e0e0e0;
         }
+
+        #timer-display {
+            background: linear-gradient(to right, #e91b96, #ff0a57);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+        }
+
+        #key-status {
+
+            margin-top: 20px;
+
+            font-size: 16px;
+
+            color: #e0e0e0;
+
+        }
+
     </style>
+
 </head>
+
 <body>
+
     <h1>Roblox Mobile Scripts</h1>
+
     <div class="tabs">
+
         <div class="tab active" id="tab-scripts">Scripts</div>
+
         <div class="tab" id="tab-key">Key Saver</div>
+
     </div>
+
     <div class="tab-content active" id="content-scripts">
+
         <div id="scripts"></div>
+
     </div>
+
     <div class="tab-content" id="content-key">
+
         <input type="text" id="key-input" placeholder="Enter key here">
+
         <button class="copy-btn" id="copy-key-btn">Copy</button>
+
         <button class="copy-btn" id="save-key-btn">Save</button>
-        <div id="timer-display">Time remaining: 06:00:00</div>
+
+        <div id="timer-container">Time remaining: <span id="timer-display">06:00:00</span></div>
+
         <div id="key-status">Key Status: <span id="status-text" style="color: #d63b3e;">Inactive</span></div>
+
     </div>
+
     <script>
+
         const scripts = [
+
             { title: "Infinite Yield", content: "loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()" },
+
             { title: "Keyboard", content: "loadstring(game:HttpGet('https://raw.githubusercontent.com/advxzivhsjjdhxhsidifvsh/mobkeyboard/main/main.txt', true))()" },
+
             { title: "Murders vs Sheriffs", content: "loadstring(game:HttpGet('https://pastebin.com/raw/vjTWQ8wW'))();" },
+
             { title: "ESP and More", content: "loadstring(game:HttpGet('https://raw.githubusercontent.com/Vcsk/RobloxScripts/main/HitboxExpander.lua'))()" },
+
             { title: "Spider-Man (Needs Keyboard)", content: "loadstring(game:HttpGet(('https://pastebin.com/raw/2X0hKUgq'),true))()" },
+
             { title: "RTX", content: "loadstring(game:HttpGet(('https://pastefy.app/xXkUxA0P/raw'),true))()" },
+
             { title: "Nameless Admin", content: "loadstring(game:HttpGet('https://raw.githubusercontent.com/FilteringEnabled/NamelessAdmin/main/Source'))();" },
+
             { title: "Mobile Hub", content: "loadstring(game:HttpGet('https://shz.al/~mobile-hub'))()" },
+
             { title: "Moon Hub", content: "loadstring(game:HttpGet('https://pastebin.com/raw/LwQkm563'))()" },
+
             { title: "Saturn", content: "loadstring(game:HttpGet('https://github.com/AnAvaragelilmemer/saturn/blob/main/main.lua?raw=true'))()" },
+
             { title: "Walk on Walls", content: "loadstring(game:HttpGet('https://pastebin.com/raw/zXk4Rq2r'))()" },
+
             { title: "Trolling GUI", content: "loadstring(game:HttpGet('https://raw.githubusercontent.com/yofriendfromschool1/Sky-Hub/main/FE%20Trolling%20GUI.luau'))()" },
+
         ];
 
         const scriptsContainer = document.getElementById('scripts');
+
         const keyInput = document.getElementById('key-input');
+
         const copyKeyBtn = document.getElementById('copy-key-btn');
+
         const saveKeyBtn = document.getElementById('save-key-btn');
+
         const timerDisplay = document.getElementById('timer-display');
+
         const statusText = document.getElementById('status-text');
 
         let timer;
+
         let endTime;
 
         // Load scripts
+
         scripts.forEach(script => {
+
             const scriptDiv = document.createElement('div');
+
             scriptDiv.classList.add('script');
+
             
+
             const titleDiv = document.createElement('div');
+
             titleDiv.classList.add('title');
+
             titleDiv.textContent = script.title;
+
             scriptDiv.appendChild(titleDiv);
+
             
+
             const copyButton = document.createElement('button');
+
             copyButton.classList.add('copy-btn');
+
             copyButton.textContent = 'Copy';
+
             copyButton.onclick = () => {
+
                 navigator.clipboard.writeText(script.content).then(() => {
+
                     copyButton.disabled = true;
+
                     copyButton.textContent = 'Copied!';
+
                     setTimeout(() => {
+
                         copyButton.disabled = false;
+
                         copyButton.textContent = 'Copy';
+
                     }, 2000);
+
                 });
+
             };
+
             scriptDiv.appendChild(copyButton);
+
             
+
             scriptsContainer.appendChild(scriptDiv);
+
         });
 
         // Load key and timer from localStorage
+
         const savedKey = localStorage.getItem('key');
+
         const savedEndTime = localStorage.getItem('endTime');
+
         if (savedKey) {
+
             keyInput.value = savedKey;
+
         }
+
         if (savedEndTime) {
+
             endTime = new Date(savedEndTime);
+
             updateTimer();
+
         }
 
         // Copy key to clipboard
+
         copyKeyBtn.onclick = () => {
+
             const key = keyInput.value;
+
             navigator.clipboard.writeText(key).then(() => {
+
                 copyKeyBtn.disabled = true;
+
                 copyKeyBtn.textContent = 'Copied!';
+
                 setTimeout(() => {
+
                     copyKeyBtn.disabled = false;
+
                     copyKeyBtn.textContent = 'Copy';
+
                 }, 2000);
+
             });
+
         };
 
         // Save key to localStorage and start timer
+
         saveKeyBtn.onclick = () => {
+
             const key = keyInput.value;
+
             localStorage.setItem('key', key);
+
             startTimer();
+
             saveKeyBtn.disabled = true;
+
             saveKeyBtn.textContent = 'Saved!';
+
             setTimeout(() => {
+
                 saveKeyBtn.disabled = false;
+
                 saveKeyBtn.textContent = 'Save';
+
             }, 2000);
+
         };
 
         // Save key on 'Enter' key press
+
         keyInput.addEventListener('keyup', (event) => {
+
             if (event.key === 'Enter') {
+
                 const key = keyInput.value;
+
                 localStorage.setItem('key', key);
+
                 startTimer();
+
                 saveKeyBtn.disabled = true;
+
                 saveKeyBtn.textContent = 'Saved';
+
                 setTimeout(() => {
+
                     saveKeyBtn.disabled = false;
+
                     saveKeyBtn.textContent = 'Save';
+
                 }, 2000);
+
             }
+
         });
 
         function startTimer() {
+
             clearInterval(timer);
+
             endTime = new Date(new Date().getTime() + 6 * 60 * 60 * 1000);
+
             localStorage.setItem('endTime', endTime);
+
             updateTimer();
+
             timer = setInterval(updateTimer, 1000);
+
         }
 
         function updateTimer() {
+
             const now = new Date();
+
             const timeDiff = endTime - now;
 
             if (timeDiff <= 0) {
+
                 clearInterval(timer);
-                timerDisplay.textContent = 'Time remaining: 00:00:00';
+
+                timerDisplay.textContent = '00:00:00';
+
                 statusText.textContent = 'Inactive';
+
                 statusText.style.color = '#d63b3e';
+
                 localStorage.removeItem('endTime');
+
             } else {
+
                 const hours = Math.floor(timeDiff / (1000 * 60 * 60));
+
                 const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+
                 const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
 
-                timerDisplay.textContent = `Time remaining: ${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+                timerDisplay.textContent = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+
                 statusText.textContent = 'Active';
+
                 statusText.style.color = '#71d69d';
+
             }
+
         }
 
         // Check timer status on page load
+
         if (endTime) {
+
             const now = new Date();
+
             if (endTime > now) {
+
                 updateTimer();
+
                 timer = setInterval(updateTimer, 1000);
+
             } else {
-                timerDisplay.textContent = 'Time remaining: 00:00:00';
+
+                timerDisplay.textContent = '00:00:00';
+
                 statusText.textContent = 'Inactive';
+
                 statusText.style.color = '#d63b3e';
+
             }
+
         }
 
         // Tab functionality
+
         const tabs = document.querySelectorAll('.tab');
+
         const tabContents = document.querySelectorAll('.tab-content');
+
         tabs.forEach(tab => {
+
             tab.addEventListener('click', () => {
+
                 tabs.forEach(t => t.classList.remove('active'));
+
                 tab.classList.add('active');
+
                 tabContents.forEach(content => content.classList.remove('active'));
+
                 document.getElementById(`content-${tab.id.split('-')[1]}`).classList.add('active');
+
             });
+
         });
+
     </script>
+
 </body>
+
 </html>
