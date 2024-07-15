@@ -45,7 +45,8 @@
         }
         .tab-content { 
             display: none; 
-            border: 2px solid #333333; 
+            border: 2px solid; 
+            border-image: linear-gradient(to bottom, #f3007b, #8b00c9) 1;
             padding: 20px; 
             border-radius: 10px; 
             background-color: #1a1a1a;
@@ -216,6 +217,6 @@
                 document.getElementById(`content-${tab.id.split('-')[1]}`).classList.add('active');
             });
         });
-    </script>
-</body>
-</html>
+   </script>
+   </body>
+   </html>
