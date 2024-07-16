@@ -14,7 +14,7 @@ Effect.Enabled = false
 
 -- Create a ScreenGui
 local screenGui = Instance.new("ScreenGui")
-screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+screenGui.Parent = game:GetService("CoreGui")
 
 -- Create a frame to hold the button
 local frame = Instance.new("Frame")
