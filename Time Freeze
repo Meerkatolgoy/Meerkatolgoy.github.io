@@ -1,104 +1,88 @@
-_G.key = Enum.KeyCode.X
-
+-- Load the external script
 loadstring(game:HttpGet("https://paste.gg/p/anonymous/d3492bd620bd4c46b54680ac80b0fa0d/files/161ddd9c992c4ceba3c298458d45188a/raw", true))()
-
-setting = settings().Network
-local Effect = Instance.new("ColorCorrectionEffect")
-Effect.Parent = game.Lighting
-Effect.Saturation = -1
-Effect.Brightness = 0
-Effect.Contrast = 0
-toggle = false
-
-Effect.Enabled = false
 
 -- Create a ScreenGui
 local screenGui = Instance.new("ScreenGui")
-screenGui.Parent = game:GetService("CoreGui")
-
--- Create a frame to hold the button
-local frame = Instance.new("Frame")
-frame.Size = UDim2.new(0, 100, 0, 30)
-frame.Position = UDim2.new(0.5, -50, 0.9, -15)
-frame.BackgroundColor3 = Color3.new(0.1, 0.1, 0.1)
-frame.BorderSizePixel = 0
-frame.Parent = screenGui
+screenGui.Parent = game.CoreGui
 
 -- Create a button
 local button = Instance.new("TextButton")
-button.Size = UDim2.new(1, 0, 1, 0)
+button.Size = UDim2.new(0, 100, 0, 30)
+button.Position = UDim2.new(0.5, -50, 1, -40)
 button.Text = "Toggle"
-button.TextColor3 = Color3.new(1, 1, 1)
-button.BackgroundColor3 = Color3.new(0.2, 0.2, 0.2)
+button.BackgroundColor3 = Color3.fromRGB(0, 170, 255)
 button.BorderSizePixel = 0
-button.Font = Enum.Font.GothamBold
-button.TextSize = 14
-button.Parent = frame
+button.TextColor3 = Color3.new(1, 1, 1)
+button.Font = Enum.Font.SourceSans
+button.TextSize = 18
+button.Parent = screenGui
 
--- Add UICorner to make button rounded
-local corner = Instance.new("UICorner")
-corner.CornerRadius = UDim.new(0, 10)
-corner.Parent = button
+-- Add UI Corner to make the button rounded
+local uiCorner = Instance.new("UICorner")
+uiCorner.CornerRadius = UDim.new(0, 10)
+uiCorner.Parent = button
 
--- Make the button draggable
-local UIS = game:GetService("UserInputService")
-local dragging
-local dragInput
-local dragStart
-local startPos
-
-local function update(input)
-    local delta = input.Position - dragStart
-    frame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+-- Function to simulate X key press
+local function simulateXKeyPress()
+    local virtualInputManager = game:GetService("VirtualInputManager")
+    virtualInputManager:SendKeyEvent(true, Enum.KeyCode.X, false, game)
+    wait(0.1) -- Small delay to simulate key press
+    virtualInputManager:SendKeyEvent(false, Enum.KeyCode.X, false, game)
 end
 
-frame.InputBegan:Connect(function(input)
+-- Variables to track button state and dragging
+local toggled = false
+local dragging = false
+local dragInput, mousePos, framePos
+
+-- Change button appearance and text based on toggled state
+local function updateButton()
+    if toggled then
+        button.Text = "Toggled!"
+        button.BackgroundColor3 = Color3.fromRGB(128, 128, 128) -- Grey
+    else
+        button.Text = "Toggle"
+        button.BackgroundColor3 = Color3.fromRGB(0, 170, 255) -- Original color
+    end
+end
+
+-- Function to handle button click
+button.MouseButton1Click:Connect(function()
+    toggled = not toggled
+    updateButton()
+    simulateXKeyPress()
+end)
+
+-- Functions to handle dragging
+local function onInputBegan(input)
     if input.UserInputType == Enum.UserInputType.MouseButton1 then
         dragging = true
-        dragStart = input.Position
-        startPos = frame.Position
-        
+        mousePos = input.Position
+        framePos = button.Position
+
         input.Changed:Connect(function()
             if input.UserInputState == Enum.UserInputState.End then
                 dragging = false
             end
         end)
     end
-end)
+end
 
-frame.InputChanged:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseMovement then
-        dragInput = input
-    end
-end)
-
-UIS.InputChanged:Connect(function(input)
-    if input == dragInput and dragging then
-        update(input)
-    end
-end)
-
--- Function to toggle the effect
-local function toggleEffect()
-    if toggle == false then
-        setting.IncomingReplicationLag = 1000
-        Effect.Enabled = true
-        toggle = true
-    else
-        setting.IncomingReplicationLag = 0
-        Effect.Enabled = false
-        toggle = false
+local function onInputChanged(input)
+    if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
+        local delta = input.Position - mousePos
+        button.Position = UDim2.new(framePos.X.Scale, framePos.X.Offset + delta.X, framePos.Y.Scale, framePos.Y.Offset + delta.Y)
     end
 end
 
--- Connect the button click to the toggle function
-button.MouseButton1Click:Connect(toggleEffect)
+-- Connect dragging functions
+button.InputBegan:Connect(onInputBegan)
+button.InputChanged:Connect(onInputChanged)
 
--- Function to handle key press for "X"
-function onKeyPress(inputObject, gameProcessedEvent)
-    if inputObject.KeyCode == Enum.KeyCode.X then    
-        toggleEffect()
-    end
-end
-
-game:GetService("UserInputService").InputBegan:connect(onKeyPress)
+-- Add UI padding to prevent accidental clicks when dragging
+local uiPadding = Instance.new("UIPadding")
+uiPadding.PaddingTop = UDim.new(0, 5)
+uiPadding.PaddingBottom = UDim.new(0, 5)
+uiPadding.PaddingLeft = UDim.new(0, 5)
+uiPadding.PaddingRight = UDim.new(0, 5)
+uiPadding.Parent = button
