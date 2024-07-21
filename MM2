@@ -87,5 +87,3 @@ uiPadding.PaddingBottom = UDim.new(0, 5)
 uiPadding.PaddingLeft = UDim.new(0, 5)
 uiPadding.PaddingRight = UDim.new(0, 5)
 uiPadding.Parent = button
-
-Now, the button will initially display “Toggled!” and switch to “Toggle” when clicked, simulating the “LeftControl” key press in the process.
