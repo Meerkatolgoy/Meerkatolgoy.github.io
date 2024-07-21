@@ -10,8 +10,8 @@ screenGui.Parent = game.CoreGui
 local button = Instance.new("TextButton")
 button.Size = UDim2.new(0, 100, 0, 30)
 button.Position = UDim2.new(0.5, -50, 1, -40)
-button.Text = "Toggled!"
-button.BackgroundColor3 = Color3.fromRGB(128, 128, 128) -- Grey
+button.Text = "Toggle"
+button.BackgroundColor3 = Color3.fromRGB(0, 170, 255)
 button.BorderSizePixel = 0
 button.TextColor3 = Color3.new(1, 1, 1)
 button.Font = Enum.Font.SourceSans
@@ -32,7 +32,7 @@ local function simulateLeftControlKeyPress()
 end
 
 -- Variables to track button state and dragging
-local toggled = true
+local toggled = false
 local dragging = false
 local dragInput, mousePos, framePos
 
