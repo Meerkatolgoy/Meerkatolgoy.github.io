@@ -626,7 +626,7 @@
 
         function startTimer() {
     clearInterval(timer);
-    endTime = new Date(new Date().getTime() + 12 * 60 * 60 * 1000); // Change 6 to 12 for 12 hours
+    endTime = new Date(new Date().getTime() + 6 * 60 * 60 * 1000); // Change 6 to 12 for 12 hours
     localStorage.setItem('endTime', endTime);
     updateTimer();
     timer = setInterval(updateTimer, 1000);
