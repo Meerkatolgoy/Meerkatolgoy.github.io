@@ -1,0 +1,87 @@
+loadstring(game:HttpGet('https://raw.githubusercontent.com/sXPiterXs1111/SanderXV2.65/main/sanderXNewV2.65.lua'))()
+
+-- Create a ScreenGui
+local screenGui = Instance.new("ScreenGui")
+screenGui.Parent = game.CoreGui
+
+-- Create a button
+local button = Instance.new("TextButton")
+button.Size = UDim2.new(0, 100, 0, 30)
+button.Position = UDim2.new(1, -110, 1, -40) -- Position at bottom-right corner
+button.Text = "Toggle"
+button.BackgroundColor3 = Color3.fromRGB(0, 170, 255)
+button.BorderSizePixel = 0
+button.TextColor3 = Color3.new(1, 1, 1)
+button.Font = Enum.Font.SourceSans
+button.TextSize = 18
+button.Parent = screenGui
+
+-- Add UI Corner to make the button rounded
+local uiCorner = Instance.new("UICorner")
+uiCorner.CornerRadius = UDim.new(0, 10)
+uiCorner.Parent = button
+
+-- Function to simulate RightShift key press
+local function simulateRightShiftKeyPress()
+    local virtualInputManager = game:GetService("VirtualInputManager")
+    virtualInputManager:SendKeyEvent(true, Enum.KeyCode.RightShift, false, game)
+    wait(0.1) -- Small delay to simulate key press
+    virtualInputManager:SendKeyEvent(false, Enum.KeyCode.RightShift, false, game)
+end
+
+-- Variables to track button state and dragging
+local toggled = false
+local dragging = false
+local dragInput, mousePos, framePos
+
+-- Change button appearance and text based on toggled state
+local function updateButton()
+    if toggled then
+        button.Text = "Toggled!"
+        button.BackgroundColor3 = Color3.fromRGB(128, 128, 128) -- Grey
+    else
+        button.Text = "Toggle"
+        button.BackgroundColor3 = Color3.fromRGB(0, 170, 255) -- Original color
+    end
+end
+
+-- Function to handle button click
+button.MouseButton1Click:Connect(function()
+    toggled = not toggled
+    updateButton()
+    simulateRightShiftKeyPress()
+end)
+
+-- Functions to handle dragging
+local function onInputBegan(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        dragging = true
+        mousePos = input.Position
+        framePos = button.Position
+
+        input.Changed:Connect(function()
+            if input.UserInputState == Enum.UserInputState.End then
+                dragging = false
+            end
+        end)
+    end
+end
+
+local function onInputChanged(input)
+    if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
+        local delta = input.Position - mousePos
+        button.Position = UDim2.new(framePos.X.Scale, framePos.X.Offset + delta.X, framePos.Y.Scale, framePos.Y.Offset + delta.Y)
+    end
+end
+
+-- Connect dragging functions
+button.InputBegan:Connect(onInputBegan)
+button.InputChanged:Connect(onInputChanged)
+
+-- Add UI padding to prevent accidental clicks when dragging
+local uiPadding = Instance.new("UIPadding")
+uiPadding.PaddingTop = UDim.new(0, 5)
+uiPadding.PaddingBottom = UDim.new(0, 5)
+uiPadding.PaddingLeft = UDim.new(0, 5)
+uiPadding.PaddingRight = UDim.new(0, 5)
+uiPadding.Parent = button
