@@ -1,4 +1,3 @@
-loadstring(game:HttpGet('https://raw.githubusercontent.com/sXPiterXs1111/SanderXV2.65/main/sanderXNewV2.65.lua'))()
 
 -- Create a ScreenGui
 local screenGui = Instance.new("ScreenGui")
@@ -85,3 +84,5 @@ uiPadding.PaddingBottom = UDim.new(0, 5)
 uiPadding.PaddingLeft = UDim.new(0, 5)
 uiPadding.PaddingRight = UDim.new(0, 5)
 uiPadding.Parent = button
+
+loadstring(game:HttpGet('https://raw.githubusercontent.com/sXPiterXs1111/SanderXV2.65/main/sanderXNewV2.65.lua'))()
